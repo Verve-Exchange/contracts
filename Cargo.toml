@@ -2,11 +2,6 @@
 resolver = "2"
 members = [
     "shared",
-    "trading-core",
-    "liquidity-manager",
-    "oracle-manager",
-    "risk-manager",
-    "faucet",
 ]
 
 [workspace.dependencies]
