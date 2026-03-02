@@ -1,8 +1,6 @@
 #![no_std]
 
 mod storage;
-mod price;
-mod validation;
 
 #[cfg(test)]
 mod test;
@@ -11,7 +9,6 @@ use soroban_sdk::{contract, contractimpl, Address, Bytes, Env, Symbol, Vec};
 use shared::{Error, PriceData, PriceFeed};
 
 use storage::*;
-use validation::*;
 
 #[contract]
 pub struct OracleManager;
@@ -69,6 +66,9 @@ impl OracleManager {
     ) -> Result<(), Error> {
         require_not_paused(&env)?;
 
+        // Ensure the feed exists before updating price
+        let feed = get_price_feed(&env, &asset)?;
+
         shared::validate_price(price)?;
 
         let timestamp = env.ledger().timestamp();
@@ -82,11 +82,13 @@ impl OracleManager {
         };
 
         // Validate against existing price if available
-        if let Some(existing) = get_price(&env, &asset) {
-            let feed = get_price_feed(&env, &asset)?;
-            
+        if let Some(existing) = read_price(&env, &asset) {
             if !feed.circuit_breaker_enabled {
-                validate_price_update(&existing, &price_data, &feed)?;
+                shared::validate_price_deviation(
+                    existing.price,
+                    price_data.price,
+                    feed.max_deviation_bps,
+                )?;
             }
         }
 
@@ -100,7 +102,7 @@ impl OracleManager {
     pub fn get_price(env: Env, asset: Symbol) -> Result<PriceData, Error> {
         require_not_paused(&env)?;
 
-        let price_data = get_price(&env, &asset).ok_or(Error::OracleUnavailable)?;
+        let price_data = read_price(&env, &asset).ok_or(Error::OracleUnavailable)?;
         let feed = get_price_feed(&env, &asset)?;
 
         // Validate freshness

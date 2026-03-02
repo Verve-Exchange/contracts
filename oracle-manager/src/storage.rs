@@ -101,7 +101,7 @@ pub fn set_price(env: &Env, asset: &Symbol, price: &PriceData) {
     extend_persistent_ttl(env, &key);
 }
 
-pub fn get_price(env: &Env, asset: &Symbol) -> Option<PriceData> {
+pub fn read_price(env: &Env, asset: &Symbol) -> Option<PriceData> {
     let key = DataKey::Price(asset.clone());
     env.storage().persistent().get(&key)
 }
