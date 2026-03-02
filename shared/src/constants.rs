@@ -11,11 +11,8 @@ pub const MAX_NAME_LENGTH: u32 = 32;
 /// Minimum collateral amount (10 USDC)
 pub const MIN_COLLATERAL: i128 = 10 * PRECISION;
 
-/// Maximum leverage for commodities
-pub const MAX_LEVERAGE_COMMODITY: u32 = 10;
-
-/// Maximum leverage for forex
-pub const MAX_LEVERAGE_FOREX: u32 = 20;
+/// Maximum leverage
+pub const MAX_LEVERAGE: u32 = 10;
 
 /// Default maintenance margin (1%)
 pub const DEFAULT_MAINTENANCE_MARGIN_BPS: u32 = 100;
