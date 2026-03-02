@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
     "shared",
+    "oracle-manager",
 ]
 
 [workspace.dependencies]

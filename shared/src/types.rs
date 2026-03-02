@@ -1,4 +1,4 @@
-use soroban_sdk::{contracttype, Address, Bytes, Symbol, Vec};
+use soroban_sdk::{contracttype, Address, Bytes, Symbol};
 
 /// Trading direction
 #[contracttype]
