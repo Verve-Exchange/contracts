@@ -1,6 +1,6 @@
-# Stellar Contracts Workspace
+# Contracts
 
-Production Soroban workspace for exchange core contracts.
+Exchange core contracts.
 
 ## 1) Workspace Overview
 
@@ -60,16 +60,6 @@ Production Soroban workspace for exchange core contracts.
 | Run tests            | `cargo test`                                                                                  |
 | Build release        | `cargo build --release`                                                                       |
 | Deploy one contract  | `stellar contract deploy --wasm <wasm_path> --source alice --network testnet --alias <alias>` |
-
-## 7) Deployment Artifacts
-
-| Artifact       | Path                                                  |
-| -------------- | ----------------------------------------------------- |
-| oracle wasm    | `target/wasm32v1-none/release/oracle_manager.wasm`    |
-| trading wasm   | `target/wasm32v1-none/release/trading_core.wasm`      |
-| liquidity wasm | `target/wasm32v1-none/release/liquidity_manager.wasm` |
-| risk wasm      | `target/wasm32v1-none/release/risk_manager.wasm`      |
-| faucet wasm    | `target/wasm32v1-none/release/faucet.wasm`            |
 
 ## 8) Notes
 
