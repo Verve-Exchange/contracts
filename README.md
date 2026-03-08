@@ -46,7 +46,7 @@ Exchange core contracts.
 
 | Alias               | Contract ID                                                |
 | ------------------- | ---------------------------------------------------------- |
-| `oracle-manager`    | `CBMKSU33CD34DSTS5DDIYURT5VSSLP7R2N5FUF4A2G6KSAAN7YMD2ZZT` |
+| `oracle-manager`    | `CA346OGI2DUAYK2CH5NUZUB6OFIPALN4BTKA5DCAXKTKDVKO7SS5R5X7` |
 | `trading-core`      | `CBD6YMB2VILL47C5B743CNDWZKWNJNJGCRNQYXU4ZKM3XN3LSEKOJPEQ` |
 | `liquidity-manager` | `CAGQODXGK6TLSQWHW7TFSMAAH3Z2ZKWDSUX2DVF57VI3GYN7CK7OKTNX` |
 | `risk-manager`      | `CDTWOBV2WJCO3KN6OICUTOIPSQGEI7W2LBTGR6WBKLW6RI4VZPHHFAC2` |
