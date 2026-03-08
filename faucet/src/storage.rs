@@ -12,6 +12,7 @@ pub enum DataKey {
     CooldownSecs,
     MaxClaimsPerDay,
     DailyLimit,
+    CanMint,
     Claim(Address),
 }
 
@@ -104,6 +105,14 @@ pub fn set_daily_limit(env: &Env, value: i128) {
 
 pub fn get_daily_limit(env: &Env) -> i128 {
     env.storage().instance().get(&DataKey::DailyLimit).unwrap_or(0)
+}
+
+pub fn set_can_mint(env: &Env, can_mint: bool) {
+    env.storage().instance().set(&DataKey::CanMint, &can_mint);
+}
+
+pub fn get_can_mint(env: &Env) -> bool {
+    env.storage().instance().get(&DataKey::CanMint).unwrap_or(false)
 }
 
 pub fn set_claim_record(env: &Env, user: &Address, record: &ClaimRecord) {

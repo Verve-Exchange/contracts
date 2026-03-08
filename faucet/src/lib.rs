@@ -22,6 +22,7 @@ impl Faucet {
         cooldown_secs: u64,
         max_claims_per_day: u32,
         daily_limit: i128,
+        can_mint: bool,
     ) -> Result<(), Error> {
         if is_initialized(&env) {
             return Err(Error::AlreadyInitialized);
@@ -36,6 +37,7 @@ impl Faucet {
         set_cooldown_secs(&env, cooldown_secs);
         set_max_claims_per_day(&env, max_claims_per_day);
         set_daily_limit(&env, daily_limit);
+        set_can_mint(&env, can_mint);
         set_initialized(&env, true);
         set_paused(&env, false);
         extend_instance_ttl(&env);
@@ -84,14 +86,22 @@ impl Faucet {
             return Err(Error::ClaimLimitExceeded);
         }
 
-        let token = token::Client::new(&env, &token_id);
+        let can_mint = get_can_mint(&env);
         let current = env.current_contract_address();
-        let faucet_balance = token.balance(&current);
-        if faucet_balance < amount {
-            return Err(Error::FaucetDepleted);
-        }
 
-        token.transfer(&current, &user, &amount);
+        if can_mint {
+            // Mint tokens directly to user (for testnet with Stellar Asset Contract)
+            let admin_client = token::StellarAssetClient::new(&env, &token_id);
+            admin_client.mint(&user, &amount);
+        } else {
+            // Transfer from faucet balance (for pre-funded faucets)
+            let token = token::Client::new(&env, &token_id);
+            let faucet_balance = token.balance(&current);
+            if faucet_balance < amount {
+                return Err(Error::FaucetDepleted);
+            }
+            token.transfer(&current, &user, &amount);
+        }
 
         record.amount_claimed += amount;
         record.last_claim_time = now;
@@ -116,6 +126,17 @@ impl Faucet {
         }
     }
 
+    pub fn get_faucet_balance(env: Env) -> i128 {
+        let token_id = get_usdc_token(&env);
+        let token = token::Client::new(&env, &token_id);
+        let current = env.current_contract_address();
+        token.balance(&current)
+    }
+
+    pub fn can_mint(env: Env) -> bool {
+        get_can_mint(&env)
+    }
+
     pub fn pause(env: Env) -> Result<(), Error> {
         require_admin(&env)?;
         set_paused(&env, true);
@@ -130,5 +151,12 @@ impl Faucet {
 
     pub fn get_usdc_token(env: Env) -> Address {
         storage::get_usdc_token(&env)
+    }
+
+    pub fn get_admin(env: Env) -> Result<Address, Error> {
+        if !is_initialized(&env) {
+            return Err(Error::NotInitialized);
+        }
+        Ok(get_admin(&env))
     }
 }
