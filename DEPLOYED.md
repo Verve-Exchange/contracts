@@ -17,11 +17,18 @@ Manages price feeds from external oracles (Pyth Network).
 Generic liquidity pool for managing deposits, withdrawals, and LP tokens.
 
 ### Faucet
-**Contract ID:** `CAL7MUOHBVNFJVFFUNJOOA63T2SB4XLWCRIE2VWXQEJ4HX4GBAJQMBQH`
+**Contract ID:** `CCE4BFY3Y7BIHJARBZYT7YVY57OD44OYB4A6QQ5XTQANJ6FXJ255DO4E`
 
 Testnet USDC faucet for developers and testers.
 
-**Explorer:** https://stellar.expert/explorer/testnet/contract/CAL7MUOHBVNFJVFFUNJOOA63T2SB4XLWCRIE2VWXQEJ4HX4GBAJQMBQH
+**Explorer:** https://stellar.expert/explorer/testnet/contract/CCE4BFY3Y7BIHJARBZYT7YVY57OD44OYB4A6QQ5XTQANJ6FXJ255DO4E
+
+**Configuration:**
+- Amount per claim: 10 USDC
+- Cooldown: 1 hour
+- Max claims per day: 10
+- Daily limit: 100 USDC
+- Mint mode: enabled
 
 ### Trading Core
 **Contract ID:** `CBM5U23LYR4G5OREF4FINKISHQQEDFH7ABODH2WIFREP7DDHZ2AWZPGU`
